@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="com.mycompany_CineClient_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.PeliculaCaracteristica</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.FacturaDetalleProducto</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoProducto</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Reserva</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoPago</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Sala</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.FacturaDetalleSala</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Sucursal</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoAsiento</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Factura</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Producto</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.ReservaDetalle</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Pelicula</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.AsientoCaracteristica</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoSala</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoReserva</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Pago</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Programacion</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoPelicula</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Asiento</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.PagoDetalle</class>
+    <class>sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.SalaCaracteristica</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cine_prn335"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="abc123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
