@@ -4,10 +4,10 @@
  */
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control;
 
-import jakarta.websocket.ClientEndpoint;//el ocupa javax
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
+import javax.websocket.ClientEndpoint;//el ocupa javax
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoSala;
 
 /**
