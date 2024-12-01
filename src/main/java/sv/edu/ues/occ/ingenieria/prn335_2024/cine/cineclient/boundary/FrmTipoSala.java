@@ -4,11 +4,13 @@
  */
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary;
 
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.TableModel;
+import org.glassfish.tyrus.client.ClientManager;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoSalaModel;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoSalaBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoSalaEndpoint;
 
 /**
  *
@@ -23,6 +25,16 @@ public class FrmTipoSala extends javax.swing.JPanel {
      * Creates new form FrmTipoSala
      */
     public FrmTipoSala() {
+        
+        try {
+            ClientManager manager = ClientManager.createClient();
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortiposala");
+            TipoSalaEndpoint endpoint = new TipoSalaEndpoint();
+            endpoint.setFrmTipoSala(this);
+            manager.connectToServer(endpoint, uri);
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
         cargarDatos();
        
         initComponents();
