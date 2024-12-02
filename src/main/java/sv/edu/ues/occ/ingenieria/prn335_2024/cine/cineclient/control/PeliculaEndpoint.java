@@ -4,15 +4,15 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSucursal;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmPelicula;
 
 /**
  *
  * @author milag
  */
 @ClientEndpoint
-public class SucursalEndpoint {
-    FrmSucursal frmSucursal;
+public class PeliculaEndpoint {
+    FrmPelicula frmPelicula;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +22,17 @@ public class SucursalEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmSucursal.cargarDatos();
-        frmSucursal.invalidate();
-        frmSucursal.getParent().validate();
-        frmSucursal.getParent().repaint();
+        frmPelicula.cargarDatos();
+        frmPelicula.invalidate();
+        frmPelicula.getParent().validate();
+        frmPelicula.getParent().repaint();
     }
 
-    public FrmSucursal getFrmSucursal() {
-        return frmSucursal;
+    public FrmPelicula getFrmPelicula() {
+        return frmPelicula;
     }
 
-    public void setFrmSucursal(FrmSucursal frmSucursal) {
-        this.frmSucursal = frmSucursal;
+    public void setFrmSucursal(FrmPelicula frmPelicula) {
+        this.frmPelicula = frmPelicula;
     }
 }

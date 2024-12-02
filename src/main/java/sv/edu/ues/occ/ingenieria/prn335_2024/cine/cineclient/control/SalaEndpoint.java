@@ -4,15 +4,16 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSucursal;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSala;
 
 /**
  *
  * @author milag
  */
 @ClientEndpoint
-public class SucursalEndpoint {
-    FrmSucursal frmSucursal;
+public class SalaEndpoint {
+
+    FrmSala frmSala;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +23,17 @@ public class SucursalEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmSucursal.cargarDatos();
-        frmSucursal.invalidate();
-        frmSucursal.getParent().validate();
-        frmSucursal.getParent().repaint();
+        frmSala.cargarDatos();
+        frmSala.invalidate();
+        frmSala.getParent().validate();
+        frmSala.getParent().repaint();
     }
 
-    public FrmSucursal getFrmSucursal() {
-        return frmSucursal;
+    public FrmSala getFrmSala() {
+        return frmSala;
     }
 
-    public void setFrmSucursal(FrmSucursal frmSucursal) {
-        this.frmSucursal = frmSucursal;
+    public void setFrmSala(FrmSala frmSala) {
+        this.frmSala = frmSala;
     }
 }

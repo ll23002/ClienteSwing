@@ -16,7 +16,6 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Sucursal;
  * @author milag
  */
 public class SucursalBean {
-
     Client cliente;
     WebTarget webTarget;
 

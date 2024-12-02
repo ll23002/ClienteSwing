@@ -93,7 +93,31 @@ public class FrmEscenario extends javax.swing.JFrame {
 
                 FrmSucursal frmSucursal = new FrmSucursal();//no tendriamos que hacer un menu para que se vea cual pagina quiere ver el cliente?
                 frmSucursal.setVisible(true);
-
+                
+                FrmAsiento frmAsiento = new FrmAsiento();
+                frmAsiento.setVisible(true);
+                
+                FrmAsientoCaracteristica frmAsientocaracteristica = new FrmAsientoCaracteristica();
+                frmAsientocaracteristica.setVisible(true);
+                
+                FrmPelicula frmPelicula = new FrmPelicula();
+                frmPelicula.setVisible(true);
+                
+                FrmPeliculaCaracteristica frmPeliculaCaracteristica = new FrmPeliculaCaracteristica();
+                frmPeliculaCaracteristica.setVisible(true);
+                
+               FrmProgramacion frmProgramacion = new FrmProgramacion();
+                frmProgramacion.setVisible(true);
+                
+                 FrmReserva frmReserva = new FrmReserva();
+                frmReserva.setVisible(true);
+                
+                 FrmSala frmSala = new FrmSala();
+                frmSala.setVisible(true);
+                
+                FrmSalaCaracteristica frmSalaCaracteristica = new FrmSalaCaracteristica();
+                frmSalaCaracteristica.setVisible(true);
+                
                 FrmEscenario frmEscenario = new FrmEscenario();
                 frmEscenario.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -104,6 +128,14 @@ public class FrmEscenario extends javax.swing.JFrame {
                 //frmEscenario.setContentPane(frmTipoPago);//ya la probe, si sirve
                 //frmEscenario.setContentPane(frmTipoProducto);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
                 //frmEscenario.setContentPane(frmTipoPelicula);//ya la probe, si sirve
+               // frmEscenario.setContentPane(frmAsiento);//ya la probe, si sirve
+              // frmEscenario.setContentPane(frmAsientocaracteristica);//ya la probe, si sirve
+               //frmEscenario.setContentPane(frmPelicula);//ya la probe, si sirve
+                //frmEscenario.setContentPane(frmPeliculaCaracteristica);//ya la probe, si sirve
+            //  frmEscenario.setContentPane(frmProgramacion);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
+                 //frmEscenario.setContentPane(frmReserva);//ya la probe, si sirve
+            // frmEscenario.setContentPane(frmSala);//ya la probe, si sirve
+             //frmEscenario.setContentPane(frmSalaCaracteristica);//ya la probe, si sirve
                 frmEscenario.setVisible(true);
                 frmEscenario.pack();
 
