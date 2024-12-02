@@ -72,17 +72,41 @@ public class FrmEscenario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 FrmTipoSala frmTipoSala = new FrmTipoSala();
                 frmTipoSala.setVisible(true);
-                
+
+                FrmTipoReserva frmTipoReserva = new FrmTipoReserva();
+                frmTipoReserva.setVisible(true);
+
+                FrmTipoProducto frmTipoProducto = new FrmTipoProducto();
+                frmTipoProducto.setVisible(true);
+
+                FrmTipoAsiento frmTipoAsiento = new FrmTipoAsiento();
+                frmTipoAsiento.setVisible(true);
+
+                FrmTipoPago frmTipoPago = new FrmTipoPago();
+                frmTipoPago.setVisible(true);
+
+                FrmTipoPelicula frmTipoPelicula = new FrmTipoPelicula();
+                frmTipoPelicula.setVisible(true);
+
+                FrmSucursal frmSucursal = new FrmSucursal();//no tendriamos que hacer un menu para que se vea cual pagina quiere ver el cliente?
+                frmSucursal.setVisible(true);
+
                 FrmEscenario frmEscenario = new FrmEscenario();
                 frmEscenario.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                
-                frmEscenario.setContentPane(frmTipoSala);
+
+                // frmEscenario.setContentPane(frmTipoSala);
+                //frmEscenario.setContentPane(frmSucursal); //ya la probe, si sirve
+                //frmEscenario.setContentPane(frmTipoReserva); //ya la probe, si sirve
+                // frmEscenario.setContentPane(frmTipoAsiento);//ya la probe, si sirve
+                //frmEscenario.setContentPane(frmTipoPago);//ya la probe, si sirve
+                //frmEscenario.setContentPane(frmTipoProducto);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
+                //frmEscenario.setContentPane(frmTipoPelicula);//ya la probe, si sirve
                 frmEscenario.setVisible(true);
                 frmEscenario.pack();
-                
+
             }
         });
     }
