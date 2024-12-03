@@ -1,25 +1,28 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary;
+
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.SucursalModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SucursalBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SucursalEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.ProgramacionModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ProgramacionBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ProgramacionEndpoint;
+
 /**
  *
  * @author milag
  */
-public class FrmSucursal extends javax.swing.JPanel {
-    SucursalBean sBean = new SucursalBean();
-    SucursalModel modelo = new SucursalModel();
-    
-    public FrmSucursal() {
+public class PnlProgramacion extends javax.swing.JPanel {
+
+    ProgramacionBean pBean = new ProgramacionBean();
+    ProgramacionModel modelo = new ProgramacionModel();
+
+    public PnlProgramacion() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorsucursal");
-            SucursalEndpoint endpoint = new SucursalEndpoint();
-            endpoint.setFrmSucursal(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorprogramacion");
+            ProgramacionEndpoint endpoint = new ProgramacionEndpoint();
+            endpoint.setPnlProgramacion(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -27,23 +30,23 @@ public class FrmSucursal extends javax.swing.JPanel {
         cargarDatos();
         initComponents();
     }
-    
-     public SucursalModel getModelo() {
+
+    public ProgramacionModel getModelo() {
         return modelo;
     }
 
-    public void setModelo(SucursalModel modelo) {
+    public void setModelo(ProgramacionModel modelo) {
         this.modelo = modelo;
     }
-    
+
     public void cargarDatos() {
-         try {
-            this.modelo.setListaRegistros(sBean.findRange(0, 50));
+        try {
+            this.modelo.setListaRegistros(pBean.findRange(0, 50));
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,7 +55,7 @@ public class FrmSucursal extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSucursal = new javax.swing.JTable();
 
-        jLabel1.setText("Sucursal");
+        jLabel1.setText("Programacion");
 
         tblSucursal.setModel(this.getModelo());
         jScrollPane1.setViewportView(tblSucursal);

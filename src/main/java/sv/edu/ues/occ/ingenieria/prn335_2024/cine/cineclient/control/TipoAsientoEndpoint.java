@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoAsiento;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlTipoAsiento;
 
 /**
  *
@@ -13,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoAsi
 @ClientEndpoint
 public class TipoAsientoEndpoint {
 
-    FrmTipoAsiento frmTipoAsiento;
+    PnlTipoAsiento pnlTipoAsiento;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class TipoAsientoEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmTipoAsiento.cargarDatos();
-        frmTipoAsiento.invalidate();
-        frmTipoAsiento.getParent().validate();
-        frmTipoAsiento.getParent().repaint();
+        pnlTipoAsiento.cargarDatos();
+        pnlTipoAsiento.invalidate();
+        pnlTipoAsiento.getParent().validate();
+        pnlTipoAsiento.getParent().repaint();
     }
 
-    public FrmTipoAsiento getFrmTipoAsiento() {
-        return frmTipoAsiento;
+    public PnlTipoAsiento getPnlTipoAsiento() {
+        return pnlTipoAsiento;
     }
 
-    public void setFrmTipoAsiento(FrmTipoAsiento frmTipoAsiento) {
-        this.frmTipoAsiento = frmTipoAsiento;
+    public void setPnlTipoAsiento(PnlTipoAsiento pnlTipoAsiento) {
+        this.pnlTipoAsiento = pnlTipoAsiento;
     }
 }

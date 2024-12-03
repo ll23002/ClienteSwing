@@ -32,6 +32,7 @@ public class SalaCaracteristicaModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         SalaCaracteristica salacaracteristica = listaRegistros.get(rowIndex);
+        
         switch (columnIndex) {
             case 0:
                 return salacaracteristica.getIdSalaCaracteristica();

@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmProgramacion;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlProgramacion;
 
 /**
  *
@@ -13,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmProgram
 @ClientEndpoint
 public class ProgramacionEndpoint {
 
-    FrmProgramacion frmProgramacion;
+    PnlProgramacion pnlProgramacion;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class ProgramacionEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmProgramacion.cargarDatos();
-        frmProgramacion.invalidate();
-        frmProgramacion.getParent().validate();
-        frmProgramacion.getParent().repaint();
+        pnlProgramacion.cargarDatos();
+        pnlProgramacion.invalidate();
+        pnlProgramacion.getParent().validate();
+        pnlProgramacion.getParent().repaint();
     }
 
-    public FrmProgramacion getFrmProgramacion() {
-        return frmProgramacion;
+    public PnlProgramacion getPnlProgramacion() {
+        return pnlProgramacion;
     }
 
-    public void setFrmProgramacion(FrmProgramacion frmProgramacion) {
-        this.frmProgramacion = frmProgramacion;
+    public void setPnlProgramacion(PnlProgramacion pnlProgramacion) {
+        this.pnlProgramacion = pnlProgramacion;
     }
 }

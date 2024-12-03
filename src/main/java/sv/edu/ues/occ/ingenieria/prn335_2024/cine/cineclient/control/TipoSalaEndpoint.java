@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control;
 
-import javax.websocket.ClientEndpoint;//el ocupa javax
+import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoSala;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlTipoSala;
 
 /**
  *
@@ -17,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoSal
 @ClientEndpoint
 public class TipoSalaEndpoint {
     
-    FrmTipoSala frmTipoSala;
+    PnlTipoSala pnlTipoSala;
     
     @OnOpen
     public void onOpen(Session s){
@@ -27,19 +23,17 @@ public class TipoSalaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion){
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmTipoSala.cargarDatos();
-        frmTipoSala.invalidate();
-        frmTipoSala.getParent().validate();
-        frmTipoSala.getParent().repaint();
+        pnlTipoSala.cargarDatos();
+        pnlTipoSala.invalidate();
+        pnlTipoSala.getParent().validate();
+        pnlTipoSala.getParent().repaint();
     }
 
-    public FrmTipoSala getFrmTipoSala() {
-        return frmTipoSala;
+    public PnlTipoSala getPnlTipoSala() {
+        return pnlTipoSala;
     }
 
-    public void setFrmTipoSala(FrmTipoSala frmTipoSala) {
-        this.frmTipoSala = frmTipoSala;
+    public void setPnlTipoSala(PnlTipoSala pnlTipoSala) {
+        this.pnlTipoSala = pnlTipoSala;
     }
-    
-    
 }

@@ -4,25 +4,25 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoAsientoModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoAsientoBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoAsientoEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.PeliculaModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.PeliculaBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.PeliculaEndpoint;
 
 /**
  *
  * @author milag
  */
-public class FrmTipoAsiento extends javax.swing.JPanel {
+public class PnlPelicula extends javax.swing.JPanel {
 
-    TipoAsientoBean taBean = new TipoAsientoBean();
-    TipoAsientoModel modelo = new TipoAsientoModel();
+    PeliculaBean pBean = new PeliculaBean();
+    PeliculaModel modelo = new PeliculaModel();
 
-    public FrmTipoAsiento() {
+    public PnlPelicula() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortipoasiento");
-            TipoAsientoEndpoint endpoint = new TipoAsientoEndpoint();
-            endpoint.setFrmTipoAsiento(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorpelicula");
+            PeliculaEndpoint endpoint = new PeliculaEndpoint();
+            endpoint.setPnlPelicula(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -31,20 +31,20 @@ public class FrmTipoAsiento extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargarDatos() {
-        try {
-            this.modelo.setListaRegistros(taBean.findRange(0, 50));
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public TipoAsientoModel getModelo() {
+    public PeliculaModel getModelo() {
         return modelo;
     }
 
-    public void setModelo(TipoAsientoModel modelo) {
+    public void setModelo(PeliculaModel modelo) {
         this.modelo = modelo;
+    }
+
+    public void cargarDatos() {
+        try {
+            this.modelo.setListaRegistros(pBean.findRange(0, 50));
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -53,12 +53,12 @@ public class FrmTipoAsiento extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTipoAsiento = new javax.swing.JTable();
+        tblPelicula = new javax.swing.JTable();
 
-        jLabel1.setText("TipoAsiento");
+        jLabel1.setText("Pelicula");
 
-        tblTipoAsiento.setModel(this.getModelo());
-        jScrollPane1.setViewportView(tblTipoAsiento);
+        tblPelicula.setModel(this.getModelo());
+        jScrollPane1.setViewportView(tblPelicula);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,6 +89,6 @@ public class FrmTipoAsiento extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblTipoAsiento;
+    private javax.swing.JTable tblPelicula;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoProducto;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlTipoProducto;
 
 /**
  *
@@ -12,7 +12,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoPro
  */
 @ClientEndpoint
 public class TipoProductoEndpoint {
-    FrmTipoProducto frmTipoProducto;
+    PnlTipoProducto pnlTipoProducto;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +22,17 @@ public class TipoProductoEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmTipoProducto.cargarDatos();
-        frmTipoProducto.invalidate();
-        frmTipoProducto.getParent().validate();
-        frmTipoProducto.getParent().repaint();
-    }
-    
-    public FrmTipoProducto getFrmTipoProducto() {
-        return frmTipoProducto;
+        pnlTipoProducto.cargarDatos();
+        pnlTipoProducto.invalidate();
+        pnlTipoProducto.getParent().validate();
+        pnlTipoProducto.getParent().repaint();
     }
 
-    public void setFrmTipoProducto(FrmTipoProducto frmTipoProducto) {
-        this.frmTipoProducto = frmTipoProducto;
+    public PnlTipoProducto getPnlTipoProducto() {
+        return pnlTipoProducto;
+    }
+
+    public void setPnlTipoProducto(PnlTipoProducto pnlTipoProducto) {
+        this.pnlTipoProducto = pnlTipoProducto;
     }
 }

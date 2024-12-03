@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSucursal;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlSucursal;
 
 /**
  *
@@ -12,7 +12,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSucursa
  */
 @ClientEndpoint
 public class SucursalEndpoint {
-    FrmSucursal frmSucursal;
+    PnlSucursal pnlSucursal;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +22,17 @@ public class SucursalEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmSucursal.cargarDatos();
-        frmSucursal.invalidate();
-        frmSucursal.getParent().validate();
-        frmSucursal.getParent().repaint();
+        pnlSucursal.cargarDatos();
+        pnlSucursal.invalidate();
+        pnlSucursal.getParent().validate();
+        pnlSucursal.getParent().repaint();
     }
 
-    public FrmSucursal getFrmSucursal() {
-        return frmSucursal;
+    public PnlSucursal getPnlSucursal() {
+        return pnlSucursal;
     }
 
-    public void setFrmSucursal(FrmSucursal frmSucursal) {
-        this.frmSucursal = frmSucursal;
+    public void setPnlSucursal(PnlSucursal pnlSucursal) {
+        this.pnlSucursal = pnlSucursal;
     }
 }

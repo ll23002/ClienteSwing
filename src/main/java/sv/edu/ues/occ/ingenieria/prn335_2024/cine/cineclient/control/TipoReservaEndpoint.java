@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoReserva;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlTipoReserva;
 
 /**
  *
@@ -12,7 +12,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoRes
  */
 @ClientEndpoint
 public class TipoReservaEndpoint {
-    FrmTipoReserva frmTipoReserva;
+    PnlTipoReserva pnlTipoReserva;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +22,17 @@ public class TipoReservaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmTipoReserva.cargarDatos();
-        frmTipoReserva.invalidate();
-        frmTipoReserva.getParent().validate();
-        frmTipoReserva.getParent().repaint();
+        pnlTipoReserva.cargarDatos();
+        pnlTipoReserva.invalidate();
+        pnlTipoReserva.getParent().validate();
+        pnlTipoReserva.getParent().repaint();
     }
 
-    public FrmTipoReserva getFrmTipoReserva() {
-        return frmTipoReserva;
+    public PnlTipoReserva getPnlTipoReserva() {
+        return pnlTipoReserva;
     }
 
-    public void setFrmTipoReserva(FrmTipoReserva frmTipoReserva) {
-        this.frmTipoReserva = frmTipoReserva;
+    public void setPnlTipoReserva(PnlTipoReserva pnlTipoReserva) {
+        this.pnlTipoReserva = pnlTipoReserva;
     }
 }

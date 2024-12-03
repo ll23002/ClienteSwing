@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSalaCaracteristica;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlSalaCaracteristica;
 
 /**
  *
@@ -13,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSalaCar
 @ClientEndpoint
 public class SalaCaracteristicaEndpoint {
 
-    FrmSalaCaracteristica frmSalaCaracteristica;
+    PnlSalaCaracteristica pnlSalaCaracteristica;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class SalaCaracteristicaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmSalaCaracteristica.cargarDatos();
-        frmSalaCaracteristica.invalidate();
-        frmSalaCaracteristica.getParent().validate();
-        frmSalaCaracteristica.getParent().repaint();
+        pnlSalaCaracteristica.cargarDatos();
+        pnlSalaCaracteristica.invalidate();
+        pnlSalaCaracteristica.getParent().validate();
+        pnlSalaCaracteristica.getParent().repaint();
     }
 
-    public FrmSalaCaracteristica getFrmSalaCaracteristica() {
-        return frmSalaCaracteristica;
+    public PnlSalaCaracteristica getPnlSalaCaracteristica() {
+        return pnlSalaCaracteristica;
     }
 
-    public void setFrmSalaCaracteristica(FrmSalaCaracteristica frmSalaCaracteristica) {
-        this.frmSalaCaracteristica = frmSalaCaracteristica;
+    public void setPnlSalaCaracteristica(PnlSalaCaracteristica pnlSalaCaracteristica) {
+        this.pnlSalaCaracteristica = pnlSalaCaracteristica;
     }
 }

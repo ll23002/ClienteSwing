@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmAsiento;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlAsiento;
 
 /**
  *
@@ -13,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmAsiento
 @ClientEndpoint
 public class AsientoEndpoint {
 
-    FrmAsiento frmAsiento;
+    PnlAsiento pnlAsiento;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class AsientoEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmAsiento.cargarDatos();
-        frmAsiento.invalidate();
-        frmAsiento.getParent().validate();
-        frmAsiento.getParent().repaint();
+        pnlAsiento.cargarDatos();
+        pnlAsiento.invalidate();
+        pnlAsiento.getParent().validate();
+        pnlAsiento.getParent().repaint();
     }
 
-    public FrmAsiento getFrmAsiento() {
-        return frmAsiento;
+    public PnlAsiento getPnlAsiento() {
+        return pnlAsiento;
     }
 
-    public void setFrmAsiento(FrmAsiento frmAsiento) {
-        this.frmAsiento = frmAsiento;
+    public void setPnlAsiento(PnlAsiento pnlAsiento) {
+        this.pnlAsiento = pnlAsiento;
     }
 }

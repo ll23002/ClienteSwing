@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSala;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlSala;
 
 /**
  *
@@ -13,7 +13,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmSala;
 @ClientEndpoint
 public class SalaEndpoint {
 
-    FrmSala frmSala;
+    PnlSala pnlSala;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class SalaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmSala.cargarDatos();
-        frmSala.invalidate();
-        frmSala.getParent().validate();
-        frmSala.getParent().repaint();
+        pnlSala.cargarDatos();
+        pnlSala.invalidate();
+        pnlSala.getParent().validate();
+        pnlSala.getParent().repaint();
     }
 
-    public FrmSala getFrmSala() {
-        return frmSala;
+    public PnlSala getPnlSala() {
+        return pnlSala;
     }
 
-    public void setFrmSala(FrmSala frmSala) {
-        this.frmSala = frmSala;
+    public void setPnlSala(PnlSala pnlSala) {
+        this.pnlSala = pnlSala;
     }
 }

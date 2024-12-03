@@ -3,7 +3,7 @@ package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmReserva;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlReserva;
 import javax.websocket.ClientEndpoint;
 
 /**
@@ -13,7 +13,7 @@ import javax.websocket.ClientEndpoint;
 @ClientEndpoint
 public class ReservaEndpoint {
 
-    FrmReserva frmReserva;
+    PnlReserva pnlReserva;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -23,17 +23,17 @@ public class ReservaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmReserva.cargarDatos();
-        frmReserva.invalidate();
-        frmReserva.getParent().validate();
-        frmReserva.getParent().repaint();
+        pnlReserva.cargarDatos();
+        pnlReserva.invalidate();
+        pnlReserva.getParent().validate();
+        pnlReserva.getParent().repaint();
     }
 
-    public FrmReserva getFrmReserva() {
-        return frmReserva;
+    public PnlReserva getPnlReserva() {
+        return pnlReserva;
     }
 
-    public void setFrmReserva(FrmReserva frmReserva) {
-        this.frmReserva = frmReserva;
+    public void setPnlReserva(PnlReserva pnlReserva) {
+        this.pnlReserva = pnlReserva;
     }
 }

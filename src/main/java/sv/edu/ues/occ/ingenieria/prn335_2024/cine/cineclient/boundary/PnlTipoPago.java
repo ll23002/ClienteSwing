@@ -4,25 +4,25 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.SalaCaracteristicaModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SalaCaracteristicaBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SalaCaracteristicaEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoPagoModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPagoBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPagoEndpoint;
 
 /**
  *
  * @author milag
  */
-public class FrmSalaCaracteristica extends javax.swing.JPanel {
+public class PnlTipoPago extends javax.swing.JPanel {
 
-    SalaCaracteristicaBean scBean = new SalaCaracteristicaBean();
-    SalaCaracteristicaModel modelo = new SalaCaracteristicaModel();
+    TipoPagoBean tpBean = new TipoPagoBean();
+    TipoPagoModel modelo = new TipoPagoModel();
 
-    public FrmSalaCaracteristica() {
+    public PnlTipoPago() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorsalacaracteristica");
-            SalaCaracteristicaEndpoint endpoint = new SalaCaracteristicaEndpoint();
-            endpoint.setFrmSalaCaracteristica(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortipopago");
+            TipoPagoEndpoint endpoint = new TipoPagoEndpoint();
+            endpoint.setPnlTipoPago(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -31,20 +31,21 @@ public class FrmSalaCaracteristica extends javax.swing.JPanel {
         initComponents();
     }
 
-    public SalaCaracteristicaModel getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(SalaCaracteristicaModel modelo) {
-        this.modelo = modelo;
-    }
-
     public void cargarDatos() {
         try {
-            this.modelo.setListaRegistros(scBean.findRange(0, 50));
+            this.modelo.setListaRegistros(tpBean.findRange(0, 50));
+
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
+    }
+
+    public TipoPagoModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(TipoPagoModel modelo) {
+        this.modelo = modelo;
     }
 
     @SuppressWarnings("unchecked")
@@ -53,12 +54,12 @@ public class FrmSalaCaracteristica extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblSalaCaracteristica = new javax.swing.JTable();
+        tblTipoPago = new javax.swing.JTable();
 
-        jLabel1.setText("Sala Caracteristica");
+        jLabel1.setText("TipoPago");
 
-        tblSalaCaracteristica.setModel(this.getModelo());
-        jScrollPane1.setViewportView(tblSalaCaracteristica);
+        tblTipoPago.setModel(this.getModelo());
+        jScrollPane1.setViewportView(tblTipoPago);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,10 +86,9 @@ public class FrmSalaCaracteristica extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblSalaCaracteristica;
+    private javax.swing.JTable tblTipoPago;
     // End of variables declaration//GEN-END:variables
 }

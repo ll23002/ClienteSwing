@@ -3,14 +3,14 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmTipoPago;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlTipoPago;
 /**
  *
  * @author milag
  */
 @ClientEndpoint
 public class TipoPagoEndpoint {
-    FrmTipoPago frmTipoPago;
+    PnlTipoPago pnlTipoPago;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -20,17 +20,17 @@ public class TipoPagoEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmTipoPago.cargarDatos();
-        frmTipoPago.invalidate();
-        frmTipoPago.getParent().validate();
-        frmTipoPago.getParent().repaint();
+        pnlTipoPago.cargarDatos();
+        pnlTipoPago.invalidate();
+        pnlTipoPago.getParent().validate();
+        pnlTipoPago.getParent().repaint();
     }
 
-    public FrmTipoPago getFrmTipoPago() {
-        return frmTipoPago;
+    public PnlTipoPago getPnlTipoPago() {
+        return pnlTipoPago;
     }
 
-    public void setFrmTipoPago(FrmTipoPago frmTipoPago) {
-        this.frmTipoPago = frmTipoPago;
+    public void setPnlTipoPago(PnlTipoPago pnlTipoPago) {
+        this.pnlTipoPago = pnlTipoPago;
     }
 }

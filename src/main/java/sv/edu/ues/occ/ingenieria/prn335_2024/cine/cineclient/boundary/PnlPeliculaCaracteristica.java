@@ -4,25 +4,25 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoPagoModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPagoBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPagoEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.PeliculaCaracteristicaModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.PeliculaCaracteristicaBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.PeliculaCaracteristicaEndpoint;
 
 /**
  *
  * @author milag
  */
-public class FrmTipoPago extends javax.swing.JPanel {
+public class PnlPeliculaCaracteristica extends javax.swing.JPanel {
 
-    TipoPagoBean tpBean = new TipoPagoBean();
-    TipoPagoModel modelo = new TipoPagoModel();
+    PeliculaCaracteristicaBean pcBean = new PeliculaCaracteristicaBean();
+    PeliculaCaracteristicaModel modelo = new PeliculaCaracteristicaModel();
 
-    public FrmTipoPago() {
+    public PnlPeliculaCaracteristica() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortipopago");
-            TipoPagoEndpoint endpoint = new TipoPagoEndpoint();
-            endpoint.setFrmTipoPago(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorpeliculacaracteristica");
+            PeliculaCaracteristicaEndpoint endpoint = new PeliculaCaracteristicaEndpoint();
+            endpoint.setPnlPeliculaCaracteristica(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -31,21 +31,20 @@ public class FrmTipoPago extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargarDatos() {
-        try {
-            this.modelo.setListaRegistros(tpBean.findRange(0, 50));
-
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public TipoPagoModel getModelo() {
+    public PeliculaCaracteristicaModel getModelo() {
         return modelo;
     }
 
-    public void setModelo(TipoPagoModel modelo) {
+    public void setModelo(PeliculaCaracteristicaModel modelo) {
         this.modelo = modelo;
+    }
+
+    public void cargarDatos() {
+        try {
+            this.modelo.setListaRegistros(pcBean.findRange(0, 50));
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -54,12 +53,12 @@ public class FrmTipoPago extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTipoPago = new javax.swing.JTable();
+        tblPeliculaCaracteristica = new javax.swing.JTable();
 
-        jLabel1.setText("TipoPago");
+        jLabel1.setText("Pelicula Caracteristica");
 
-        tblTipoPago.setModel(this.getModelo());
-        jScrollPane1.setViewportView(tblTipoPago);
+        tblPeliculaCaracteristica.setModel(this.getModelo());
+        jScrollPane1.setViewportView(tblPeliculaCaracteristica);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,9 +85,10 @@ public class FrmTipoPago extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblTipoPago;
+    private javax.swing.JTable tblPeliculaCaracteristica;
     // End of variables declaration//GEN-END:variables
 }

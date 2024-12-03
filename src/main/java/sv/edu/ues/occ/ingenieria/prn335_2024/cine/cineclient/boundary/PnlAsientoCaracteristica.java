@@ -12,17 +12,17 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.AsientoCara
  *
  * @author milag
  */
-public class FrmAsientoCaracteristica extends javax.swing.JPanel {
+public class PnlAsientoCaracteristica extends javax.swing.JPanel {
 
     AsientoCaracteristicaBean sBean = new AsientoCaracteristicaBean();
     AsientoCaracteristicaModel modelo = new AsientoCaracteristicaModel();
 
-    public FrmAsientoCaracteristica() {
+    public PnlAsientoCaracteristica() {
         try {
             ClientManager manager = ClientManager.createClient();
             URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorasientocaracteristica");
             AsientoCaracteristicaEndpoint endpoint = new AsientoCaracteristicaEndpoint();
-            endpoint.setFrmAsientoCaracteristica(this);
+            endpoint.setPnlAsientoCaracteristica(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);

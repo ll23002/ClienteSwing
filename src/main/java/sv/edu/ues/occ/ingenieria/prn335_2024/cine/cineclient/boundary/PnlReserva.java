@@ -4,25 +4,25 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoPeliculaModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPeliculaBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoPeliculaEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.ReservaModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ReservaBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ReservaEndpoint;
 
 /**
  *
  * @author milag
  */
-public class FrmTipoPelicula extends javax.swing.JPanel {
+public class PnlReserva extends javax.swing.JPanel {
 
-    TipoPeliculaBean tpBean = new TipoPeliculaBean();
-    TipoPeliculaModel modelo = new TipoPeliculaModel();
+    ReservaBean rBean = new ReservaBean();
+    ReservaModel modelo = new ReservaModel();
 
-    public FrmTipoPelicula() {
+    public PnlReserva() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortipopelicula");
-            TipoPeliculaEndpoint endpoint = new TipoPeliculaEndpoint();
-            endpoint.setFrmTipoPelicula(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorreserva");
+            ReservaEndpoint endpoint = new ReservaEndpoint();
+            endpoint.setPnlReserva(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -31,21 +31,20 @@ public class FrmTipoPelicula extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargarDatos() {
-        try {
-            this.modelo.setListaRegistros(tpBean.findRange(0, 50));
-
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public TipoPeliculaModel getModelo() {
+    public ReservaModel getModelo() {
         return modelo;
     }
 
-    public void setModelo(TipoPeliculaModel modelo) {
+    public void setModelo(ReservaModel modelo) {
         this.modelo = modelo;
+    }
+
+    public void cargarDatos() {
+        try {
+            this.modelo.setListaRegistros(rBean.findRange(0, 50));
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -54,12 +53,12 @@ public class FrmTipoPelicula extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTipoPelicula = new javax.swing.JTable();
+        tblReserva = new javax.swing.JTable();
 
-        jLabel1.setText("TipoPelicula");
+        jLabel1.setText("Reserva");
 
-        tblTipoPelicula.setModel(this.getModelo());
-        jScrollPane1.setViewportView(tblTipoPelicula);
+        tblReserva.setModel(this.getModelo());
+        jScrollPane1.setViewportView(tblReserva);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -90,6 +89,6 @@ public class FrmTipoPelicula extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblTipoPelicula;
+    private javax.swing.JTable tblReserva;
     // End of variables declaration//GEN-END:variables
 }

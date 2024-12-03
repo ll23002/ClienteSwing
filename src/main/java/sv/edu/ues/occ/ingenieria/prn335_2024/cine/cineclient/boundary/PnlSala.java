@@ -4,25 +4,25 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.tyrus.client.ClientManager;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.TipoProductoModel;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoProductoBean;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.TipoProductoEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.modelos.SalaModel;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SalaBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.SalaEndpoint;
 
 /**
  *
  * @author milag
  */
-public class FrmTipoProducto extends javax.swing.JPanel {
+public class PnlSala extends javax.swing.JPanel {
 
-    TipoProductoBean tpBean = new TipoProductoBean();
-    TipoProductoModel modelo = new TipoProductoModel();
+    SalaBean sBean = new SalaBean();
+    SalaModel modelo = new SalaModel();
 
-    public FrmTipoProducto() {
+    public PnlSala() {
         try {
             ClientManager manager = ClientManager.createClient();
-            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadortipoproducto");
-            TipoProductoEndpoint endpoint = new TipoProductoEndpoint();
-            endpoint.setFrmTipoProducto(this);
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorsala");
+            SalaEndpoint endpoint = new SalaEndpoint();
+            endpoint.setPnlSala(this);
             manager.connectToServer(endpoint, uri);
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
@@ -31,20 +31,20 @@ public class FrmTipoProducto extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void cargarDatos() {
-        try {
-            this.modelo.setListaRegistros(tpBean.findRange(0, 50));
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-    }
-
-    public TipoProductoModel getModelo() {
+    public SalaModel getModelo() {
         return modelo;
     }
 
-    public void setModelo(TipoProductoModel modelo) {
+    public void setModelo(SalaModel modelo) {
         this.modelo = modelo;
+    }
+
+    public void cargarDatos() {
+        try {
+            this.modelo.setListaRegistros(sBean.findRange(0, 50));
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -53,12 +53,12 @@ public class FrmTipoProducto extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblTipoProducto = new javax.swing.JTable();
+        tblSala = new javax.swing.JTable();
 
-        jLabel1.setText("TipoProducto");
+        jLabel1.setText("Sala");
 
-        tblTipoProducto.setModel(this.getModelo());
-        jScrollPane1.setViewportView(tblTipoProducto);
+        tblSala.setModel(this.getModelo());
+        jScrollPane1.setViewportView(tblSala);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,6 +89,6 @@ public class FrmTipoProducto extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblTipoProducto;
+    private javax.swing.JTable tblSala;
     // End of variables declaration//GEN-END:variables
 }

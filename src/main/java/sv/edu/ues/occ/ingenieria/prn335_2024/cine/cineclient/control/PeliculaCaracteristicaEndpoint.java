@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmPeliculaCaracteristica;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlPeliculaCaracteristica;
 
 /**
  *
@@ -12,7 +12,7 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.FrmPelicul
  */
 @ClientEndpoint
 public class PeliculaCaracteristicaEndpoint {
-    FrmPeliculaCaracteristica frmPeliculaCaracteristica;
+    PnlPeliculaCaracteristica pnlPeliculaCaracteristica;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -22,17 +22,17 @@ public class PeliculaCaracteristicaEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        frmPeliculaCaracteristica.cargarDatos();
-        frmPeliculaCaracteristica.invalidate();
-        frmPeliculaCaracteristica.getParent().validate();
-        frmPeliculaCaracteristica.getParent().repaint();
+        pnlPeliculaCaracteristica.cargarDatos();
+        pnlPeliculaCaracteristica.invalidate();
+        pnlPeliculaCaracteristica.getParent().validate();
+        pnlPeliculaCaracteristica.getParent().repaint();
     }
 
-    public FrmPeliculaCaracteristica getFrmPeliculaCaracteristica() {
-        return frmPeliculaCaracteristica;
+    public PnlPeliculaCaracteristica getPnlPeliculaCaracteristica() {
+        return pnlPeliculaCaracteristica;
     }
 
-    public void setFrmPeliculaCaracteristica(FrmPeliculaCaracteristica frmPeliculaCaracteristica) {
-        this.frmPeliculaCaracteristica = frmPeliculaCaracteristica;
+    public void setPnlPeliculaCaracteristica(PnlPeliculaCaracteristica pnlPeliculaCaracteristica) {
+        this.pnlPeliculaCaracteristica = pnlPeliculaCaracteristica;
     }
 }
