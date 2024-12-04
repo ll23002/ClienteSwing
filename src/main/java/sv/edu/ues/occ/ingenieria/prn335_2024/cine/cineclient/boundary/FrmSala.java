@@ -8,12 +8,12 @@ package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary;
  *
  * @author alexander
  */
-public class FrmEscenario extends javax.swing.JFrame {
+public class FrmSala extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmEscenario
      */
-    public FrmEscenario() {
+    public FrmSala() {
         initComponents();
     }
 
@@ -59,14 +59,15 @@ public class FrmEscenario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEscenario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEscenario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEscenario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmEscenario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -118,24 +119,24 @@ public class FrmEscenario extends javax.swing.JFrame {
                 PnlSalaCaracteristica frmSalaCaracteristica = new PnlSalaCaracteristica();
                 frmSalaCaracteristica.setVisible(true);
                 
-                FrmEscenario frmEscenario = new FrmEscenario();
+                FrmSala frmEscenario = new FrmSala();
                 frmEscenario.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-                frmEscenario.setContentPane(frmTipoSala);
+               // frmEscenario.setContentPane(frmTipoSala);
                 //frmEscenario.setContentPane(frmSucursal); //ya la probe, si sirve
                 //frmEscenario.setContentPane(frmTipoReserva); //ya la probe, si sirve
                 // frmEscenario.setContentPane(frmTipoAsiento);//ya la probe, si sirve
-                //frmEscenario.setContentPane(frmTipoPago);//ya la probe, si sirve
+                frmEscenario.setContentPane(frmTipoPago);//ya la probe, si sirve
                // frmEscenario.setContentPane(frmTipoProducto);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
                 //frmEscenario.setContentPane(frmTipoPelicula);//ya la probe, si sirve
-               // frmEscenario.setContentPane(frmAsiento);//ya la probe, si sirve
+               //frmEscenario.setContentPane(frmAsiento);//ya la probe, si sirve
               //frmEscenario.setContentPane(frmAsientocaracteristica);//ya la probe, si sirve
                //frmEscenario.setContentPane(frmPelicula);//ya la probe, si sirve
                 //frmEscenario.setContentPane(frmPeliculaCaracteristica);//ya la probe, si sirve
              // frmEscenario.setContentPane(frmProgramacion);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
                  //frmEscenario.setContentPane(frmReserva);//ya la probe, si sirve
             // frmEscenario.setContentPane(frmSala);//ya la probe, si sirve
-             frmEscenario.setContentPane(frmSalaCaracteristica);//ya la probe, si sirve
+            // frmEscenario.setContentPane(frmSalaCaracteristica);//ya la probe, si sirve
                 frmEscenario.setVisible(true);
                 frmEscenario.pack();
 
