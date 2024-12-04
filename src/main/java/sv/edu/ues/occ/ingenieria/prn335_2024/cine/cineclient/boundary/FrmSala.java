@@ -74,69 +74,12 @@ public class FrmSala extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                PnlTipoSala frmTipoSala = new PnlTipoSala();
-                frmTipoSala.setVisible(true);
-
-                PnlTipoReserva frmTipoReserva = new PnlTipoReserva();
-                frmTipoReserva.setVisible(true);
-
-                PnlTipoProducto frmTipoProducto = new PnlTipoProducto();
-                frmTipoProducto.setVisible(true);
-
-                PnlTipoAsiento frmTipoAsiento = new PnlTipoAsiento();
-                frmTipoAsiento.setVisible(true);
-
-                PnlTipoPago frmTipoPago = new PnlTipoPago();
-                frmTipoPago.setVisible(true);
-
-                PnlTipoPelicula frmTipoPelicula = new PnlTipoPelicula();
-                frmTipoPelicula.setVisible(true);
-
-                PnlSucursal frmSucursal = new PnlSucursal();//no tendriamos que hacer un menu para que se vea cual pagina quiere ver el cliente?
-                frmSucursal.setVisible(true);
-                
                 PnlAsiento frmAsiento = new PnlAsiento();
                 frmAsiento.setVisible(true);
                 
-                PnlAsientoCaracteristica frmAsientocaracteristica = new PnlAsientoCaracteristica();
-                frmAsientocaracteristica.setVisible(true);
-                
-                PnlPelicula frmPelicula = new PnlPelicula();
-                frmPelicula.setVisible(true);
-                
-                PnlPeliculaCaracteristica frmPeliculaCaracteristica = new PnlPeliculaCaracteristica();
-                frmPeliculaCaracteristica.setVisible(true);
-                
-               PnlProgramacion frmProgramacion = new PnlProgramacion();
-                frmProgramacion.setVisible(true);
-                
-                 PnlReserva frmReserva = new PnlReserva();
-                frmReserva.setVisible(true);
-                
-                 PnlSala frmSala = new PnlSala();
-                frmSala.setVisible(true);
-                
-                PnlSalaCaracteristica frmSalaCaracteristica = new PnlSalaCaracteristica();
-                frmSalaCaracteristica.setVisible(true);
-                
                 FrmSala frmEscenario = new FrmSala();
                 frmEscenario.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-               // frmEscenario.setContentPane(frmTipoSala);
-                //frmEscenario.setContentPane(frmSucursal); //ya la probe, si sirve
-                //frmEscenario.setContentPane(frmTipoReserva); //ya la probe, si sirve
-                // frmEscenario.setContentPane(frmTipoAsiento);//ya la probe, si sirve
-                frmEscenario.setContentPane(frmTipoPago);//ya la probe, si sirve
-               // frmEscenario.setContentPane(frmTipoProducto);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
-                //frmEscenario.setContentPane(frmTipoPelicula);//ya la probe, si sirve
-               //frmEscenario.setContentPane(frmAsiento);//ya la probe, si sirve
-              //frmEscenario.setContentPane(frmAsientocaracteristica);//ya la probe, si sirve
-               //frmEscenario.setContentPane(frmPelicula);//ya la probe, si sirve
-                //frmEscenario.setContentPane(frmPeliculaCaracteristica);//ya la probe, si sirve
-             // frmEscenario.setContentPane(frmProgramacion);//NO SE PORQUE NO MUESTRA NINGUN DATO, HAY QUE REVISARLO
-                 //frmEscenario.setContentPane(frmReserva);//ya la probe, si sirve
-            // frmEscenario.setContentPane(frmSala);//ya la probe, si sirve
-            // frmEscenario.setContentPane(frmSalaCaracteristica);//ya la probe, si sirve
+                frmEscenario.setContentPane(frmAsiento);//ya la probe, si sirve
                 frmEscenario.setVisible(true);
                 frmEscenario.pack();
 
