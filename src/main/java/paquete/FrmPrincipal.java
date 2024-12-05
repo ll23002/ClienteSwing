@@ -5,6 +5,8 @@
 package paquete;
 
 import java.awt.CardLayout;
+import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -22,6 +24,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
           jPanel1.add(JpanelCinco, "card5"); // Cambié de "Tarjeta1" a "card2"
          // Ocultar el calendario al inicio
         calendario.setVisible(false);
+        
+PeliculaDatos datos = new PeliculaDatos();
+List<String> nombres = datos.obtenerNombresPeliculas();
+for (String nombre : nombres) {
+    System.out.println(nombre); // O actualiza un componente de la GUI
+}
+
+
 
     }
 
@@ -146,6 +156,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1.setText("Datos generales");
 
         jLabel2.setText("Nombre");
+
+        NombreCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreClienteActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("DUI");
 
@@ -293,6 +309,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_calendarioMouseClicked
+
+    private void NombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreClienteActionPerformed
 
     /**
      * @param args the command line arguments
