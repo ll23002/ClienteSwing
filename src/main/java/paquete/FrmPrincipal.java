@@ -178,8 +178,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        FechaText.setText("jLabel9");
-
         javax.swing.GroupLayout JpanelDosLayout = new javax.swing.GroupLayout(JpanelDos);
         JpanelDos.setLayout(JpanelDosLayout);
         JpanelDosLayout.setHorizontalGroup(
@@ -229,8 +227,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(FechaText)
+                        .addGap(18, 18, 18)
+                        .addComponent(FechaText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
