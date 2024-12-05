@@ -18,7 +18,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         jPanel1.add(JpanelDos, "card2"); // Cambié de "Tarjeta1" a "card2"
-        jPanel1.add(JpanelTres, "card3"); // Cambié de "Tarjeta2" a "card3"
          jPanel1.add(JpanelCuatro, "card4"); // Cambié de "Tarjeta1" a "card2"
           jPanel1.add(JpanelCinco, "card5"); // Cambié de "Tarjeta1" a "card2"
          // Ocultar el calendario al inicio
@@ -48,19 +47,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         calendario = new com.jcalendar.pane.calendar.CalendarPane();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        JpanelTres = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel6 = new javax.swing.JLabel();
         JpanelCuatro = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jLabel8 = new javax.swing.JLabel();
         JpanelCinco = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         jLabel7.setText("jLabel7");
 
@@ -88,8 +83,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         jButton3.setText("Fecha");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Fecha");
+
+        jLabel5.setText("Pelicula");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JpanelDosLayout = new javax.swing.GroupLayout(JpanelDos);
         JpanelDos.setLayout(JpanelDosLayout);
@@ -108,13 +116,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addGap(30, 30, 30)
                 .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -136,80 +146,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(jLabel4)))
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(JpanelDosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jButton1)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         jPanel1.add(JpanelDos, "card2");
-
-        jButton2.setText("Next");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Pelicula");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jLabel6.setText("Caracteristica");
-
-        javax.swing.GroupLayout JpanelTresLayout = new javax.swing.GroupLayout(JpanelTres);
-        JpanelTres.setLayout(JpanelTresLayout);
-        JpanelTresLayout.setHorizontalGroup(
-            JpanelTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JpanelTresLayout.createSequentialGroup()
-                .addGap(0, 100, Short.MAX_VALUE)
-                .addGroup(JpanelTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelTresLayout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(262, 262, 262))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelTresLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addGroup(JpanelTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelTresLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)))
-                        .addGap(113, 113, 113))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelTresLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(273, 273, 273))
-        );
-        JpanelTresLayout.setVerticalGroup(
-            JpanelTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelTresLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addGroup(JpanelTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(76, 76, 76))
-        );
-
-        jPanel1.add(JpanelTres, "card3");
 
         jButton4.setText("Next");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -254,19 +202,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jButton5.setText("Confirmar");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Detalles de reserva");
+
         javax.swing.GroupLayout JpanelCincoLayout = new javax.swing.GroupLayout(JpanelCinco);
         JpanelCinco.setLayout(JpanelCincoLayout);
         JpanelCincoLayout.setHorizontalGroup(
             JpanelCincoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanelCincoLayout.createSequentialGroup()
-                .addGap(265, 265, 265)
-                .addComponent(jButton5)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addGroup(JpanelCincoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JpanelCincoLayout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(jButton5))
+                    .addGroup(JpanelCincoLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
         JpanelCincoLayout.setVerticalGroup(
             JpanelCincoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelCincoLayout.createSequentialGroup()
-                .addContainerGap(333, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(81, 81, 81))
         );
@@ -295,26 +253,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CardLayout cl = (CardLayout) jPanel1.getLayout();
-        cl.show(jPanel1, "card3"); // Cambia a la tarjeta "card3"
+        cl.show(jPanel1, "card4"); // Cambia a la tarjeta "card3"
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CardLayout cl = (CardLayout) jPanel1.getLayout();
-        cl.show(jPanel1, "card4"); // Cambia a la tarjeta "card2"
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
          CardLayout cl = (CardLayout) jPanel1.getLayout();
         cl.show(jPanel1, "card5"); // Cambia a la tarjeta "card2"
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        calendario.setVisible(!calendario.isVisible());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,11 +313,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel JpanelCinco;
     private javax.swing.JPanel JpanelCuatro;
     private javax.swing.JPanel JpanelDos;
-    private javax.swing.JPanel JpanelTres;
     private com.jcalendar.pane.calendar.CalendarPane calendarPane1;
     private com.jcalendar.pane.calendar.CalendarPane calendario;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -372,9 +328,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
