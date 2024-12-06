@@ -7,9 +7,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import org.glassfish.tyrus.client.ClientManager;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.AsientoEndpoint;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Asiento;
@@ -18,7 +20,10 @@ public class FrmReserva extends javax.swing.JFrame {
 
     private final CardLayout cardLayout;
     private DefaultListModel<String> modeloAsientos; // Modelo para jList1 (asientos disponibles)
-    private DefaultListModel<String> modeloAsientosSeleccionados; // Modelo para jList2 (asientos seleccionados)
+    private DefaultListModel<Asiento> modeloAsientosSeleccionados; // Modelo para jList2 (asientos seleccionados)
+
+    private DefaultListModel<Asiento> ObjetoAsientoModelo;
+    private List<Asiento> Seleccionados; // Lista para guardar los asientos seleccionados
 
     public FrmReserva() {
         initComponents();
@@ -30,8 +35,9 @@ public class FrmReserva extends javax.swing.JFrame {
         // Inicializar modelos para las listas
         modeloAsientos = new DefaultListModel<>();
         modeloAsientosSeleccionados = new DefaultListModel<>();
+        ObjetoAsientoModelo = new DefaultListModel<>();
+        Seleccionados = new ArrayList<>();
         jList1.setModel(modeloAsientos);
-        jList2.setModel(modeloAsientosSeleccionados);
 
         // Configurar WebSocket
         conectarWebSocket();
@@ -53,33 +59,32 @@ public class FrmReserva extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
-  public void actualizarListaAsientos(String mensaje) {
-    try {
-        // Configura ObjectMapper para procesar el JSON
-        ObjectMapper mapper = new ObjectMapper();
 
-        // Especifica que se espera una lista de objetos `Asiento`
-        List<Asiento> asientos = mapper.readValue(mensaje, new TypeReference<List<Asiento>>() {});
+    public void actualizarListaAsientos(String mensaje) {
+        try {
+            // Configura ObjectMapper para procesar el JSON
+            ObjectMapper mapper = new ObjectMapper();
 
-        // Limpia el modelo de la lista antes de actualizar
-        modeloAsientos.clear();
+            // Especifica que se espera una lista de objetos `Asiento`
+            List<Asiento> asientos = mapper.readValue(mensaje, new TypeReference<List<Asiento>>() {
+            });
 
-        // Agrega los nombres de los asientos al modelo
-        for (Asiento asiento : asientos) {
-            modeloAsientos.addElement(asiento.getNombre());
+            // Limpia el modelo de la lista antes de actualizar
+            modeloAsientos.clear();
+
+            // Agrega los nombres de los asientos al modelo
+            for (Asiento asiento : asientos) {
+                modeloAsientos.addElement(asiento.getNombre());
+                ObjetoAsientoModelo.addElement(asiento);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error actualizando la lista de asientos: " + e.getMessage());
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        System.err.println("Error actualizando la lista de asientos: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
-  
-   public void conectarWebSocket() {
+    public void conectarWebSocket() {
         try {
             ClientManager clientManager = ClientManager.createClient();
             URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorasiento");
@@ -92,7 +97,6 @@ public class FrmReserva extends javax.swing.JFrame {
             System.err.println("Error conectando al WebSocket: " + e.getMessage());
         }
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -353,7 +357,30 @@ public class FrmReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_ReservarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        // Obtener los índices seleccionados en jList1
+        int[] selectedIndices = jList1.getSelectedIndices();
+
+        if (selectedIndices.length > 0) {
+            for (int index : selectedIndices) {
+                // Obtener el asiento seleccionado del modelo de la lista
+                Asiento asientoSeleccionado = ObjetoAsientoModelo.getElementAt(index);
+
+                // Verificar si ya está seleccionado (opcional)
+                if (!Seleccionados.contains(asientoSeleccionado)) {
+                    Seleccionados.add(asientoSeleccionado); // Guardar en la lista auxiliar
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Asientos seleccionados guardados.");
+
+            // Mostrar en consola los asientos seleccionados
+            System.out.println("Asientos seleccionados:");
+            for (Asiento asiento : Seleccionados) {
+                System.out.println("ID: " + asiento.getIdAsiento() + ", Nombre: " + asiento.getNombre());
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione al menos un asiento.");
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     // txtFecha.getDate();
