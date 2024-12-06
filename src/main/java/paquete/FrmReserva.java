@@ -1,27 +1,41 @@
 package paquete;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import org.glassfish.tyrus.client.ClientManager;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.AsientoEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Asiento;
 
 public class FrmReserva extends javax.swing.JFrame {
-    private final CardLayout cardLayout;
 
-    
+    private final CardLayout cardLayout;
+    private DefaultListModel<String> modeloAsientos; // Modelo para jList1 (asientos disponibles)
+    private DefaultListModel<String> modeloAsientosSeleccionados; // Modelo para jList2 (asientos seleccionados)
 
     public FrmReserva() {
         initComponents();
         cardLayout = (CardLayout) pnlPrincipal.getLayout();
-          pnlPrincipal.add(jpnlReserva, "card1"); // Cambié de "Tarjeta1" a "card2"
+        pnlPrincipal.add(jpnlReserva, "card1"); // Cambié de "Tarjeta1" a "card2"
         pnlPrincipal.add(pnlAsientos, "card2"); // Cambié de "Tarjeta2" a "card3"
-        pnlPrincipal.add(Confirmacion,"card3");
-      
-        
-        
-        
-        
+        pnlPrincipal.add(Confirmacion, "card3");
+
+        // Inicializar modelos para las listas
+        modeloAsientos = new DefaultListModel<>();
+        modeloAsientosSeleccionados = new DefaultListModel<>();
+        jList1.setModel(modeloAsientos);
+        jList2.setModel(modeloAsientosSeleccionados);
+
+        // Configurar WebSocket
+        conectarWebSocket();
+
         txtF.setVisible(false);
         // Agregar un listener para detectar cambios en la fecha del JDateChooser
         txtFecha.getDateEditor().addPropertyChangeListener(evt -> {
@@ -32,13 +46,53 @@ public class FrmReserva extends javax.swing.JFrame {
                     // Formatear la fecha a un String
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     String fecha = sdf.format(date);
-                    
+
                     // Colocar la fecha en el JTextField
                     txtF.setText(fecha);
                 }
             }
         });
     }
+    
+    
+    
+  public void actualizarListaAsientos(String mensaje) {
+    try {
+        // Configura ObjectMapper para procesar el JSON
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Especifica que se espera una lista de objetos `Asiento`
+        List<Asiento> asientos = mapper.readValue(mensaje, new TypeReference<List<Asiento>>() {});
+
+        // Limpia el modelo de la lista antes de actualizar
+        modeloAsientos.clear();
+
+        // Agrega los nombres de los asientos al modelo
+        for (Asiento asiento : asientos) {
+            modeloAsientos.addElement(asiento.getNombre());
+        }
+
+    } catch (Exception e) {
+        System.err.println("Error actualizando la lista de asientos: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+  
+   public void conectarWebSocket() {
+        try {
+            ClientManager clientManager = ClientManager.createClient();
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorasiento");
+
+            AsientoEndpoint endpoint = new AsientoEndpoint();
+            endpoint.setFrmReserva(this);
+
+            clientManager.connectToServer(endpoint, uri);
+        } catch (Exception e) {
+            System.err.println("Error conectando al WebSocket: " + e.getMessage());
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,11 +230,6 @@ public class FrmReserva extends javax.swing.JFrame {
 
         btnQuitar.setText("Quitar");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jList2);
 
         javax.swing.GroupLayout pnlAsientosLayout = new javax.swing.GroupLayout(pnlAsientos);
@@ -281,25 +330,25 @@ public class FrmReserva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFActionPerformed
-       
+
     }//GEN-LAST:event_txtFActionPerformed
 
     private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
-      
+
     }//GEN-LAST:event_txtFechaKeyReleased
 
     private void NextUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextUnoActionPerformed
-        
+
         cardLayout.show(pnlPrincipal, "card2"); // Cambia a la tarjeta "card3"
     }//GEN-LAST:event_NextUnoActionPerformed
 
     private void NextDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextDosActionPerformed
-        
+
         cardLayout.show(pnlPrincipal, "card3"); // Cambia a la tarjeta "card3"
     }//GEN-LAST:event_NextDosActionPerformed
 
     private void ReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservarActionPerformed
-        
+
         cardLayout.show(pnlPrincipal, "card1"); // Cambia a la tarjeta "card3"
     }//GEN-LAST:event_ReservarActionPerformed
 

@@ -38,7 +38,7 @@ public class PnlTipoSala extends javax.swing.JPanel {
     
     public void cargarDatos(){
          try {
-            this.modelo.setListaRegistros(tsBean.findRange(0, 50));
+            this.modelo.setListaRegistros(tsBean.findRange(0, 100));
             
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);

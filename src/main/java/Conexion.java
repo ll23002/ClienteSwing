@@ -12,7 +12,8 @@ public class Conexion {
             Connection conexion = ds.getConnection();
             
             // Ejecutar una consulta
-            String query = "SELECT * FROM pelicula";
+            String query = "SELECT nombre FROM asiento"; // Cambia 'nombre' según el campo que quieras mostrar
+
             PreparedStatement pst = conexion.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
 

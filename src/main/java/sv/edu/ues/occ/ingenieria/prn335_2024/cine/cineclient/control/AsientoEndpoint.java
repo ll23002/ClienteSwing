@@ -4,7 +4,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlAsiento;
+import paquete.FrmReserva;
 
 /**
  *
@@ -13,27 +13,27 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlAsiento
 @ClientEndpoint
 public class AsientoEndpoint {
 
-    PnlAsiento pnlAsiento;
+    private FrmReserva frmReserva;
 
     @OnOpen
     public void onOpen(Session s) {
-        System.out.println("conecto: " + s);
+        System.out.println("Conectado al WebSocket: " + s);
     }
 
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
-        System.out.println("Recibio datos: " + mensaje + "sesion: " + sesion);
-        pnlAsiento.cargarDatos();
-        pnlAsiento.invalidate();
-        pnlAsiento.getParent().validate();
-        pnlAsiento.getParent().repaint();
+        System.out.println("Recibió datos: " + mensaje + " Sesión: " + sesion);
+
+        if (frmReserva != null) {
+            frmReserva.actualizarListaAsientos(mensaje); // Llama al método de FrmReserva
+        }
     }
 
-    public PnlAsiento getPnlAsiento() {
-        return pnlAsiento;
+    public FrmReserva getFrmReserva() {
+        return frmReserva;
     }
 
-    public void setPnlAsiento(PnlAsiento pnlAsiento) {
-        this.pnlAsiento = pnlAsiento;
+    public void setFrmReserva(FrmReserva frmReserva) {
+        this.frmReserva = frmReserva;
     }
 }
