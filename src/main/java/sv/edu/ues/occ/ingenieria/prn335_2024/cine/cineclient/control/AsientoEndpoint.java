@@ -24,7 +24,7 @@ public class AsientoEndpoint {
     @OnMessage
     public void onMessage(String mensaje, Session sesion) {
         System.out.println("Recibió datos: " + mensaje + " Sesión: " + sesion);
-
+        frmReserva.actualizarListaPeliculas(mensaje);
         if (frmReserva != null) {
             frmReserva.actualizarListaAsientos(mensaje); // Llama al método de FrmReserva
         }

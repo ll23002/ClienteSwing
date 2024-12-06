@@ -49,24 +49,8 @@ public class FrmReserva extends javax.swing.JFrame {
         jList1.setModel(modeloAsientos);
 
         // Configurar WebSocket
-        conectarWebSocketPeliculas();
-
-        txtF.setVisible(false);
-        // Agregar un listener para detectar cambios en la fecha del JDateChooser
-        txtFecha.getDateEditor().addPropertyChangeListener(evt -> {
-            if ("date".equals(evt.getPropertyName())) {
-                // Obtener la fecha seleccionada
-                Date date = txtFecha.getDate();
-                if (date != null) {
-                    // Formatear la fecha a un String
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                    String fecha = sdf.format(date);
-
-                    // Colocar la fecha en el JTextField
-                    txtF.setText(fecha);
-                }
-            }
-        });
+        //conectarWebSocketPeliculas();
+         conectarWebSocket();
     }
 
     public void actualizarListaAsientos(String mensaje) {
@@ -132,32 +116,24 @@ public class FrmReserva extends javax.swing.JFrame {
 
     public void actualizarListaPeliculas(String mensaje) {
         try {
-            // Configura ObjectMapper para procesar el JSON
             ObjectMapper mapper = new ObjectMapper();
-
-            // Especifica que se espera una lista de objetos Programacion
             List<Programacion> programaciones = mapper.readValue(mensaje, new TypeReference<List<Programacion>>() {
             });
-
-            // Limpia el modelo del ComboBox antes de actualizar
             ModeloCmbPelicualas.removeAllElements();
-
-            // Agrega las películas al modelo
             if (programaciones.isEmpty()) {
                 ModeloCmbPelicualas.addElement("No hay películas disponibles");
             } else {
                 for (Programacion programacion : programaciones) {
-                    String nombrePelicula = programacion.getIdPelicula().getNombre(); // Asumiendo que Programacion tiene este campo
+                    String nombrePelicula = programacion.getIdPelicula().getNombre(); 
+                    String nombrePF = programacion.getIdPelicula().getNombre() +"    " + programacion.getDesde(); 
                     System.out.println("Nombre:" + nombrePelicula);
                     if (nombrePelicula != null && !nombrePelicula.isEmpty()) {
                         ModeloCmbPelicualas.addElement(nombrePelicula);
+                        lblFechap4.setText(nombrePF);
                     }
                 }
             }
-
-            // Asignar el modelo al JComboBox
             cmbNombrePeliculap1.setModel(ModeloCmbPelicualas);
-
         } catch (Exception e) {
             System.err.println("Error actualizando la lista de películas: " + e.getMessage());
             e.printStackTrace();
@@ -179,8 +155,6 @@ public class FrmReserva extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNombrePeliculap1 = new javax.swing.JTextField();
         cmbNombrePeliculap1 = new javax.swing.JComboBox<>();
-        txtFecha = new com.toedter.calendar.JDateChooser();
-        txtF = new javax.swing.JTextField();
         NextUno = new javax.swing.JButton();
         pnlAsientos = new javax.swing.JPanel();
         NextDos = new javax.swing.JButton();
@@ -192,6 +166,14 @@ public class FrmReserva extends javax.swing.JFrame {
         jList2 = new javax.swing.JList<>();
         Confirmacion = new javax.swing.JPanel();
         Reservar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblAsientosp3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblFechap4 = new javax.swing.JLabel();
+        btnConfirmarR = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -208,18 +190,17 @@ public class FrmReserva extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Datos Generales");
 
+        txtNombrePeliculap1.setEditable(false);
         txtNombrePeliculap1.setText("Pelicula");
-
-        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtFechaKeyReleased(evt);
+        txtNombrePeliculap1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombrePeliculap1ActionPerformed(evt);
             }
         });
 
-        txtF.setEditable(false);
-        txtF.addActionListener(new java.awt.event.ActionListener() {
+        cmbNombrePeliculap1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFActionPerformed(evt);
+                cmbNombrePeliculap1ActionPerformed(evt);
             }
         });
 
@@ -240,17 +221,13 @@ public class FrmReserva extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addGroup(jpnlReservaLayout.createSequentialGroup()
-                                .addComponent(txtF, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNombrePeliculap1)
-                                    .addComponent(cmbNombrePeliculap1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))))
+                            .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombrePeliculap1)
+                                .addComponent(cmbNombrePeliculap1, 0, 173, Short.MAX_VALUE))))
                     .addGroup(jpnlReservaLayout.createSequentialGroup()
                         .addGap(433, 433, 433)
                         .addComponent(NextUno)))
-                .addContainerGap(589, Short.MAX_VALUE))
+                .addContainerGap(593, Short.MAX_VALUE))
             .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jpnlReservaLayout.createSequentialGroup()
                     .addGap(10, 10, 10)
@@ -262,25 +239,23 @@ public class FrmReserva extends javax.swing.JFrame {
             .addGroup(jpnlReservaLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
-                .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(124, 124, 124)
                 .addComponent(txtNombrePeliculap1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(cmbNombrePeliculap1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                 .addComponent(NextUno)
                 .addGap(35, 35, 35))
             .addGroup(jpnlReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jpnlReservaLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(418, Short.MAX_VALUE)))
+                    .addContainerGap(499, Short.MAX_VALUE)))
         );
 
         pnlPrincipal.add(jpnlReserva, "card1");
+
+        pnlAsientos.setBackground(new java.awt.Color(0, 51, 153));
 
         NextDos.setText("Next");
         NextDos.addActionListener(new java.awt.event.ActionListener() {
@@ -335,7 +310,7 @@ public class FrmReserva extends javax.swing.JFrame {
                         .addComponent(btnAgregar)
                         .addGap(18, 18, 18)
                         .addComponent(btnQuitar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE))
                     .addGroup(pnlAsientosLayout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addGroup(pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,6 +323,8 @@ public class FrmReserva extends javax.swing.JFrame {
 
         pnlPrincipal.add(pnlAsientos, "card2");
 
+        Confirmacion.setBackground(new java.awt.Color(0, 51, 153));
+
         Reservar.setText("Reservar");
         Reservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,19 +332,82 @@ public class FrmReserva extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Confimación");
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Pelicula:");
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Este es el resumen de tu orden:");
+
+        lblAsientosp3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblAsientosp3.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Asientos:");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Fecha:");
+
+        lblFechap4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblFechap4.setForeground(new java.awt.Color(255, 255, 255));
+
+        btnConfirmarR.setText("Confirmar reserva ");
+
         javax.swing.GroupLayout ConfirmacionLayout = new javax.swing.GroupLayout(Confirmacion);
         Confirmacion.setLayout(ConfirmacionLayout);
         ConfirmacionLayout.setHorizontalGroup(
             ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConfirmacionLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(106, 106, 106))
             .addGroup(ConfirmacionLayout.createSequentialGroup()
-                .addGap(428, 428, 428)
-                .addComponent(Reservar)
-                .addContainerGap(576, Short.MAX_VALUE))
+                .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ConfirmacionLayout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(Reservar))
+                    .addGroup(ConfirmacionLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnConfirmarR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                .addComponent(lblAsientosp3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6)
+                            .addGroup(ConfirmacionLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(179, 179, 179)
+                                .addComponent(jLabel9))
+                            .addComponent(lblFechap4, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(478, Short.MAX_VALUE))
         );
         ConfirmacionLayout.setVerticalGroup(
             ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConfirmacionLayout.createSequentialGroup()
-                .addContainerGap(405, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFechap4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblAsientosp3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
+                .addComponent(btnConfirmarR)
+                .addGap(53, 53, 53)
                 .addComponent(Reservar)
                 .addGap(50, 50, 50))
         );
@@ -403,14 +443,6 @@ public class FrmReserva extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFActionPerformed
-
-    }//GEN-LAST:event_txtFActionPerformed
-
-    private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
-
-    }//GEN-LAST:event_txtFechaKeyReleased
 
     private void NextUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextUnoActionPerformed
 
@@ -466,12 +498,26 @@ public class FrmReserva extends javax.swing.JFrame {
             System.out.println("Asientos seleccionados:");
             for (Asiento asiento : Seleccionados) {
                 System.out.println("ID: " + asiento.getIdAsiento() + ", Nombre: " + asiento.getNombre());
+                lblAsientosp3.setText(asiento.getNombre());
             }
 
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione al menos un asiento.");
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtNombrePeliculap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePeliculap1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_txtNombrePeliculap1ActionPerformed
+
+    private void cmbNombrePeliculap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNombrePeliculap1ActionPerformed
+        // TODO add your handling code here:
+        String el = (String)cmbNombrePeliculap1.getSelectedItem();
+        txtNombrePeliculap1.setText(el);
+       
+    }//GEN-LAST:event_cmbNombrePeliculap1ActionPerformed
 
     // txtFecha.getDate();
     public static void main(String args[]) {
@@ -512,20 +558,26 @@ public class FrmReserva extends javax.swing.JFrame {
     private javax.swing.JButton NextUno;
     private javax.swing.JButton Reservar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnConfirmarR;
     private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cmbNombrePeliculap1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpnlReserva;
+    private javax.swing.JLabel lblAsientosp3;
+    private javax.swing.JLabel lblFechap4;
     private javax.swing.JPanel pnlAsientos;
     private javax.swing.JPanel pnlPrincipal;
-    private javax.swing.JTextField txtF;
-    private com.toedter.calendar.JDateChooser txtFecha;
     private javax.swing.JTextField txtNombrePeliculap1;
     // End of variables declaration//GEN-END:variables
 }
