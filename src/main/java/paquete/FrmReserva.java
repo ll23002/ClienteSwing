@@ -7,6 +7,11 @@ import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,12 +24,18 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.AsientoEndp
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ProgramacionEndpoint;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Asiento;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Programacion;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Reserva;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.TipoReserva;
 
 public class FrmReserva extends javax.swing.JFrame {
+
+    private String FechaSeleccionada;
 
     private final CardLayout cardLayout;
     private DefaultListModel<String> modeloAsientos; // Modelo para jList1 (asientos disponibles)
     private DefaultListModel<Asiento> modeloAsientosSeleccionados; // Modelo para jList2 (asientos seleccionados)
+
+    private DefaultListModel<Programacion> modeloObjetoProgramacion; // Modelo para jList2 (asientos seleccionados)
 
     private DefaultListModel<Asiento> ObjetoAsientoModelo;
     private List<Asiento> Seleccionados; // Lista para guardar los asientos seleccionados
@@ -44,13 +55,14 @@ public class FrmReserva extends javax.swing.JFrame {
         modeloAsientosSeleccionados = new DefaultListModel<>();
         ObjetoAsientoModelo = new DefaultListModel<>();
         ModeloCmbPelicualas = new DefaultComboBoxModel<>();
+        modeloObjetoProgramacion = new DefaultListModel<>();
 
         Seleccionados = new ArrayList<>();
         jList1.setModel(modeloAsientos);
 
         // Configurar WebSocket
         //conectarWebSocketPeliculas();
-         conectarWebSocket();
+        conectarWebSocket();
     }
 
     public void actualizarListaAsientos(String mensaje) {
@@ -79,10 +91,10 @@ public class FrmReserva extends javax.swing.JFrame {
 
     public void conectarWebSocket() {
         try {
-            
-             if (asientoEndpoint != null) {
-            asientoEndpoint.cerrarConexion();
-        }
+
+            if (asientoEndpoint != null) {
+                asientoEndpoint.cerrarConexion();
+            }
             ClientManager clientManager = ClientManager.createClient();
             URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorasiento");
 
@@ -97,10 +109,10 @@ public class FrmReserva extends javax.swing.JFrame {
 
     public void conectarWebSocketPeliculas() {
         try {
-            
-             if (programacionEndpoint != null) {
-            programacionEndpoint.cerrarConexion();
-        }
+
+            if (programacionEndpoint != null) {
+                programacionEndpoint.cerrarConexion();
+            }
             ClientManager clientManager = ClientManager.createClient();
             URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorprogramacion");
             //URI uri = new URI("ws://localhost:9080/cineprn335/notificadorprogramacion");
@@ -114,6 +126,32 @@ public class FrmReserva extends javax.swing.JFrame {
         }
     }
 
+    public int consultaIdMaxReserva() {
+        String url = "jdbc:postgresql://localhost:5432/cine_prn335"; // Cambia "tu_base_datos" por el nombre de tu base de datos
+        String user = "postgres"; // Cambia esto si tu usuario es diferente
+        String password = "abc123"; // Cambia esto si tu contraseña es diferente
+
+        int maxId = -1; // Inicializa con un valor inválido para verificar posibles errores
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            // Consulta para obtener el ID más alto de la tabla Reserva
+            String query = "SELECT MAX(id_reserva) AS max_id FROM reserva";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            if (rs.next()) { // Si hay resultados
+                maxId = rs.getInt("max_id"); // Obtener el valor del ID más alto
+                System.out.println("El ID más alto en la tabla Reserva es: " + maxId);
+            } else {
+                System.out.println("No se encontraron reservas en la tabla.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return maxId; // Retorna el ID más alto, o -1 si ocurrió algún problema
+    }
+
     public void actualizarListaPeliculas(String mensaje) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -124,11 +162,12 @@ public class FrmReserva extends javax.swing.JFrame {
                 ModeloCmbPelicualas.addElement("No hay películas disponibles");
             } else {
                 for (Programacion programacion : programaciones) {
-                    String nombrePelicula = programacion.getIdPelicula().getNombre(); 
-                    String nombrePF = programacion.getIdPelicula().getNombre() +"    " + programacion.getDesde(); 
+                    String nombrePelicula = programacion.getIdPelicula().getNombre();
+                    String nombrePF = programacion.getIdPelicula().getNombre() + "    " + programacion.getDesde();
                     System.out.println("Nombre:" + nombrePelicula);
                     if (nombrePelicula != null && !nombrePelicula.isEmpty()) {
                         ModeloCmbPelicualas.addElement(nombrePelicula);
+                        modeloObjetoProgramacion.addElement(programacion);
                         lblFechap4.setText(nombrePF);
                     }
                 }
@@ -174,6 +213,8 @@ public class FrmReserva extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lblFechap4 = new javax.swing.JLabel();
         btnConfirmarR = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        idReserva = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -250,7 +291,7 @@ public class FrmReserva extends javax.swing.JFrame {
                 .addGroup(jpnlReservaLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(499, Short.MAX_VALUE)))
+                    .addContainerGap(514, Short.MAX_VALUE)))
         );
 
         pnlPrincipal.add(jpnlReserva, "card1");
@@ -359,6 +400,13 @@ public class FrmReserva extends javax.swing.JFrame {
         lblFechap4.setForeground(new java.awt.Color(255, 255, 255));
 
         btnConfirmarR.setText("Confirmar reserva ");
+        btnConfirmarR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarRActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("ID reserva");
 
         javax.swing.GroupLayout ConfirmacionLayout = new javax.swing.GroupLayout(Confirmacion);
         Confirmacion.setLayout(ConfirmacionLayout);
@@ -378,24 +426,36 @@ public class FrmReserva extends javax.swing.JFrame {
                         .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnConfirmarR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                .addComponent(btnConfirmarR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, Short.MAX_VALUE)
                                 .addComponent(lblAsientosp3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel6)
                             .addGroup(ConfirmacionLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(179, 179, 179)
                                 .addComponent(jLabel9))
-                            .addComponent(lblFechap4, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(478, Short.MAX_VALUE))
+                            .addComponent(lblFechap4, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(ConfirmacionLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                                .addComponent(jLabel7)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(idReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(177, 177, 177))
         );
         ConfirmacionLayout.setVerticalGroup(
             ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ConfirmacionLayout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ConfirmacionLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ConfirmacionLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(idReserva))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -429,7 +489,7 @@ public class FrmReserva extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(412, 412, 412)
                         .addComponent(jLabel1)))
-                .addContainerGap(937, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,6 +524,8 @@ public class FrmReserva extends javax.swing.JFrame {
     private void NextDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextDosActionPerformed
 
         cardLayout.show(pnlPrincipal, "card3"); // Cambia a la tarjeta "card3"
+
+        idReserva.setText(String.valueOf(consultaIdMaxReserva()));
 
         // Cerrar la conexión de AsientoEndpoint si está activa
         if (asientoEndpoint != null) {
@@ -508,16 +570,44 @@ public class FrmReserva extends javax.swing.JFrame {
 
     private void txtNombrePeliculap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombrePeliculap1ActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_txtNombrePeliculap1ActionPerformed
 
     private void cmbNombrePeliculap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNombrePeliculap1ActionPerformed
         // TODO add your handling code here:
-        String el = (String)cmbNombrePeliculap1.getSelectedItem();
+        String el = (String) cmbNombrePeliculap1.getSelectedItem();
         txtNombrePeliculap1.setText(el);
-       
+
     }//GEN-LAST:event_cmbNombrePeliculap1ActionPerformed
+
+    private void btnConfirmarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarRActionPerformed
+        int itemSeleccionado = cmbNombrePeliculap1.getSelectedIndex();
+        
+        Programacion elementoSeleccionado = modeloObjetoProgramacion.getElementAt(itemSeleccionado);
+        
+        TipoReserva TipoReserva = new TipoReserva();
+        TipoReserva.setIdTipoReserva(1);
+        TipoReserva.setActivo(true);
+        
+        Long idReservaConvertido = (long) consultaIdMaxReserva() +1;
+
+        
+      
+        
+       
+
+        // Recorrer el modelo y comparar índices
+      
+
+        Reserva datosPreparados = new Reserva();
+
+        datosPreparados.setEstado("CREADO en el Cliente");
+        datosPreparados.setFechaReserva(elementoSeleccionado.getDesde());
+        datosPreparados.setIdProgramacion(elementoSeleccionado);
+        datosPreparados.setIdReserva(idReservaConvertido);
+        datosPreparados.setIdTipoReserva(TipoReserva);
+    }//GEN-LAST:event_btnConfirmarRActionPerformed
 
     // txtFecha.getDate();
     public static void main(String args[]) {
@@ -561,12 +651,14 @@ public class FrmReserva extends javax.swing.JFrame {
     private javax.swing.JButton btnConfirmarR;
     private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cmbNombrePeliculap1;
+    private javax.swing.JLabel idReserva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;

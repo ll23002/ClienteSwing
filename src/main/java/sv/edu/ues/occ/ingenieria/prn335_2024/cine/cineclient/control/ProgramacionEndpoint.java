@@ -1,5 +1,10 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -13,10 +18,11 @@ import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.boundary.PnlProgram
  */
 @ClientEndpoint
 public class ProgramacionEndpoint {
+
     private FrmReserva frmReserva;
-    
+
     PnlProgramacion pnlProgramacion;
-    
+
     private Session session;
 
     @OnOpen
@@ -36,8 +42,8 @@ public class ProgramacionEndpoint {
             frmReserva.actualizarListaPeliculas(mensaje); // Llama al método de FrmReserva
         }
     }
-    
-     // Método para cerrar la conexión WebSocket
+
+    // Método para cerrar la conexión WebSocket
     public void cerrarConexion() {
         try {
             if (session != null && session.isOpen()) {
@@ -49,6 +55,9 @@ public class ProgramacionEndpoint {
         }
     }
 
+  
+
+
     public PnlProgramacion getPnlProgramacion() {
         return pnlProgramacion;
     }
@@ -56,12 +65,12 @@ public class ProgramacionEndpoint {
     public void setPnlProgramacion(PnlProgramacion pnlProgramacion) {
         this.pnlProgramacion = pnlProgramacion;
     }
-    
-     public FrmReserva getFrmReserva() {
+
+    public FrmReserva getFrmReserva() {
         return frmReserva;
     }
-    
-     public void setFrmReserva(FrmReserva frmReserva) {
+
+    public void setFrmReserva(FrmReserva frmReserva) {
         this.frmReserva = frmReserva;
     }
 }

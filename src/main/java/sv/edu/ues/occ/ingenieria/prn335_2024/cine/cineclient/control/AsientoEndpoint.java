@@ -1,5 +1,10 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -29,6 +34,10 @@ public class AsientoEndpoint {
             frmReserva.actualizarListaAsientos(mensaje); // Llama al método de FrmReserva
         }
     }
+    
+    
+     
+
 
     public FrmReserva getFrmReserva() {
         return frmReserva;
