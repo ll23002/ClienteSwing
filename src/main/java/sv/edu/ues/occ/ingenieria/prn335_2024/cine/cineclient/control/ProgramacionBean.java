@@ -27,7 +27,7 @@ public class ProgramacionBean {
 
     public List<Programacion> findRange(int first, int max) {
         try {
-            Response respuesta = webTarget.path("sucursal")
+            Response respuesta = webTarget.path("programacion")
                     .queryParam("first", first)
                     .queryParam("max", max)
                     .request(MediaType.APPLICATION_JSON).get();

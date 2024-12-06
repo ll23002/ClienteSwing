@@ -14,6 +14,7 @@ import paquete.FrmReserva;
 public class AsientoEndpoint {
 
     private FrmReserva frmReserva;
+      private Session session;
 
     @OnOpen
     public void onOpen(Session s) {
@@ -35,5 +36,16 @@ public class AsientoEndpoint {
 
     public void setFrmReserva(FrmReserva frmReserva) {
         this.frmReserva = frmReserva;
+    }
+    
+     public void cerrarConexion() {
+        try {
+            if (session != null && session.isOpen()) {
+                session.close();
+                System.out.println("Conexión de AsientoEndpoint cerrada.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cerrar conexión en AsientoEndpoint: " + e.getMessage());
+        }
     }
 }

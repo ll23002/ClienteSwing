@@ -1,6 +1,7 @@
 package paquete;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
@@ -10,11 +11,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.glassfish.tyrus.client.ClientManager;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.AsientoEndpoint;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.control.ProgramacionEndpoint;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Asiento;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.cineclient.entity.Programacion;
 
 public class FrmReserva extends javax.swing.JFrame {
 
@@ -24,6 +28,9 @@ public class FrmReserva extends javax.swing.JFrame {
 
     private DefaultListModel<Asiento> ObjetoAsientoModelo;
     private List<Asiento> Seleccionados; // Lista para guardar los asientos seleccionados
+    private DefaultComboBoxModel<String> ModeloCmbPelicualas;
+    private ProgramacionEndpoint programacionEndpoint;
+    private AsientoEndpoint asientoEndpoint;
 
     public FrmReserva() {
         initComponents();
@@ -36,11 +43,13 @@ public class FrmReserva extends javax.swing.JFrame {
         modeloAsientos = new DefaultListModel<>();
         modeloAsientosSeleccionados = new DefaultListModel<>();
         ObjetoAsientoModelo = new DefaultListModel<>();
+        ModeloCmbPelicualas = new DefaultComboBoxModel<>();
+
         Seleccionados = new ArrayList<>();
         jList1.setModel(modeloAsientos);
 
         // Configurar WebSocket
-        conectarWebSocket();
+        conectarWebSocketPeliculas();
 
         txtF.setVisible(false);
         // Agregar un listener para detectar cambios en la fecha del JDateChooser
@@ -86,15 +95,77 @@ public class FrmReserva extends javax.swing.JFrame {
 
     public void conectarWebSocket() {
         try {
+            
+             if (asientoEndpoint != null) {
+            asientoEndpoint.cerrarConexion();
+        }
             ClientManager clientManager = ClientManager.createClient();
             URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorasiento");
 
-            AsientoEndpoint endpoint = new AsientoEndpoint();
-            endpoint.setFrmReserva(this);
+            asientoEndpoint = new AsientoEndpoint(); // Crea y asigna la instancia
+            asientoEndpoint.setFrmReserva(this);
 
-            clientManager.connectToServer(endpoint, uri);
+            clientManager.connectToServer(asientoEndpoint, uri);
         } catch (Exception e) {
             System.err.println("Error conectando al WebSocket: " + e.getMessage());
+        }
+    }
+
+    public void conectarWebSocketPeliculas() {
+        try {
+            
+             if (programacionEndpoint != null) {
+            programacionEndpoint.cerrarConexion();
+        }
+            ClientManager clientManager = ClientManager.createClient();
+            URI uri = new URI("ws://localhost:9080/cineprn335-1.0-SNAPSHOT/notificadorprogramacion");
+            //URI uri = new URI("ws://localhost:9080/cineprn335/notificadorprogramacion");
+
+            programacionEndpoint = new ProgramacionEndpoint();
+            programacionEndpoint.setFrmReserva(this);
+
+            clientManager.connectToServer(programacionEndpoint, uri);
+        } catch (Exception e) {
+            System.err.println("Error conectando al WebSocket de películas: " + e.getMessage());
+        }
+    }
+
+    public void actualizarListaPeliculas(String mensaje) {
+        try {
+            // Configura ObjectMapper para procesar el JSON
+            ObjectMapper mapper = new ObjectMapper();
+
+            // Especifica que se espera una lista de objetos Programacion
+            List<Programacion> programaciones = mapper.readValue(mensaje, new TypeReference<List<Programacion>>() {
+            });
+
+            // Limpia el modelo del ComboBox antes de actualizar
+            ModeloCmbPelicualas.removeAllElements();
+
+            // Agrega las películas al modelo
+            if (programaciones.isEmpty()) {
+                ModeloCmbPelicualas.addElement("No hay películas disponibles");
+            } else {
+                for (Programacion programacion : programaciones) {
+                    String nombrePelicula = programacion.getIdPelicula().getNombre(); // Asumiendo que Programacion tiene este campo
+                    System.out.println("Nombre:" + nombrePelicula);
+                    if (nombrePelicula != null && !nombrePelicula.isEmpty()) {
+                        ModeloCmbPelicualas.addElement(nombrePelicula);
+                    }
+                }
+            }
+
+            // Asignar el modelo al JComboBox
+            cmbNombrePeliculap1.setModel(ModeloCmbPelicualas);
+
+        } catch (Exception e) {
+            System.err.println("Error actualizando la lista de películas: " + e.getMessage());
+            e.printStackTrace();
+
+            // Manejo de error: mostrar un mensaje genérico en el ComboBox
+            ModeloCmbPelicualas.removeAllElements();
+            ModeloCmbPelicualas.addElement("Error al cargar películas");
+            cmbNombrePeliculap1.setModel(ModeloCmbPelicualas);
         }
     }
 
@@ -344,11 +415,30 @@ public class FrmReserva extends javax.swing.JFrame {
     private void NextUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextUnoActionPerformed
 
         cardLayout.show(pnlPrincipal, "card2"); // Cambia a la tarjeta "card3"
+
+        // Cerrar la conexión de ProgramacionEndpoint si está activa
+        if (programacionEndpoint != null) {
+            programacionEndpoint.cerrarConexion();
+        } else {
+            System.err.println("programacionEndpoint no estaba inicializado.");
+        }
+
+        // Conectar a AsientoEndpoint
+        conectarWebSocket();
+
+
     }//GEN-LAST:event_NextUnoActionPerformed
 
     private void NextDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextDosActionPerformed
 
         cardLayout.show(pnlPrincipal, "card3"); // Cambia a la tarjeta "card3"
+
+        // Cerrar la conexión de AsientoEndpoint si está activa
+        if (asientoEndpoint != null) {
+            asientoEndpoint.cerrarConexion();
+        } else {
+            System.err.println("asientoEndpoint no estaba inicializado.");
+        }
     }//GEN-LAST:event_NextDosActionPerformed
 
     private void ReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservarActionPerformed
